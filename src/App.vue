@@ -1,16 +1,36 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div>
+    <button v-for="(item,index) in fruits"
+            :key="index"
+            @click="btnClick(index)">{{index}}:{{item}}
+    </button>
+    <div>选择了{{currentSelect}}</div>
+  </div>
+  <reactive-demo></reactive-demo>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent,ref } from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
+import reactiveDemo from "@/components/reactiveDemo.vue";
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    reactiveDemo
+  },
+  setup(){
+    const fruits = ref(['菠萝','香蕉','橘子','柠檬'])
+    const currentSelect = ref('')
+    const btnClick = (index:number) => {
+      currentSelect.value = fruits.value[index]
+    }
+    return{
+      fruits,
+      currentSelect,
+      btnClick
+    }
   }
 });
 </script>
