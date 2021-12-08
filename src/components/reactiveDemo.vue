@@ -5,7 +5,7 @@
           :key="index"
           @click="data.btnClick(index)">{{index}}:{{item}}
   </button>
-  <div>选择了{{data.currentSelect}}</div>
+  <div>reactive演示：选择了 data.currentSelect：{{data.currentSelect}}---- currentSelect：{{currentSelect}}</div>
   <button @click="overAction">点餐完成</button>
   <div>{{overText}}</div>
 </div>
@@ -30,8 +30,18 @@ export default defineComponent({
         data.currentSelect = data.fruits[index]
       }
     })
+    // const obj = {
+    //   fruits: ['菠萝','香蕉','橘子','柠檬'],
+    //   currentSelect: '',
+    //   btnClick: (index:number) => {
+    //     data.currentSelect = data.fruits[index]
+    //   }
+    // }
+    //toRefs批量创建ref类型数据, 并和以前数据关联
     const refData = toRefs(data);
-    // console.log(refData.fruits);
+    // console.log(data);
+    // console.log(obj);
+    // console.log(refData);
     const overText = ref('');
     const overAction = () => {
       overText.value = '点餐完成 | ' + overText.value;
@@ -45,6 +55,7 @@ export default defineComponent({
     });
     return{
       data,
+      /*...data不行,结构后只是普通变量*/
       ...refData,
       overAction,
       overText
